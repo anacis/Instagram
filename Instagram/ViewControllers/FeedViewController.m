@@ -7,6 +7,9 @@
 //
 
 #import "FeedViewController.h"
+#import "SceneDelegate.h"
+#import "LoginViewController.h"
+#import <Parse/Parse.h>
 
 @interface FeedViewController ()
 
@@ -17,6 +20,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+- (IBAction)logout:(id)sender {
+    [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+        if (error == nil) {
+            NSLog(@"User is logged out");
+            SceneDelegate *myDelegate = (SceneDelegate *)self.view.window.windowScene.delegate;
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginNavigationController"];
+            myDelegate.window.rootViewController = loginViewController;
+        }
+        else {
+            NSLog(@"Error logging out: %@", error);
+        }
+    }];
+    
 }
 
 /*
