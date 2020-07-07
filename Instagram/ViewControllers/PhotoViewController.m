@@ -9,9 +9,9 @@
 #import "PhotoViewController.h"
 #import "Post.h"
 
-@interface PhotoViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface PhotoViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UITextView *textField;
 
 @end
 
@@ -19,20 +19,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.textField.delegate = self;
+    
 }
 
 - (IBAction)cancel:(id)sender {
     [self.tabBarController setSelectedIndex:0];
+    [self.textField endEditing:YES];
+    self.textField.text = @"Write your caption here!";
+    self.textField.textColor = UIColor.opaqueSeparatorColor;
     
 }
 
 - (IBAction)share:(id)sender {
-    //TODO: Post post here
     [Post postUserImage:self.imageView.image withCaption:self.textField.text withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
             NSLog(@"Posted image successfully!");
-            self.textField.text = @"";
+            [self.textField endEditing:YES];
+            self.textField.text = @"Write your caption here!";
+            self.textField.textColor = UIColor.opaqueSeparatorColor;
             self.imageView.image = [UIImage imageNamed: @"image_placeholder.png"];
         }
         else {
@@ -64,7 +69,7 @@
     //UIImage *editedImage = info[UIImagePickerControllerEditedImage];
 
     // Do something with the images (based on your use case)
-    UIImage *resizedImage = [self resizeImage:originalImage withSize:CGSizeMake(200, 100)];
+    UIImage *resizedImage = [self resizeImage:originalImage withSize:CGSizeMake(300, 300)];
     self.imageView.image = resizedImage;
     
     // Dismiss UIImagePickerController to go back to your original view controller
@@ -84,6 +89,17 @@
     
     return newImage;
 }
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    textView.text = @"";
+    textView.textColor = UIColor.blackColor;
+}
+
+- (IBAction)dismissKeyboard:(id)sender {
+    [self.textField endEditing:YES];
+}
+
+
 
 /*
 #pragma mark - Navigation

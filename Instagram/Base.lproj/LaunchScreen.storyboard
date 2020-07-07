@@ -15,19 +15,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="color-insta" translatesAutoresizingMaskIntoConstraints="NO" id="6Cg-oD-qEQ">
-                                <rect key="frame" x="87" y="278" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="color-insta" translatesAutoresizingMaskIntoConstraints="NO" id="6Cg-oD-qEQ">
+                                <rect key="frame" x="87" y="276" width="240" height="130"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="ZNY-Vy-Fve"/>
+                                    <constraint firstAttribute="width" constant="240" id="fOH-oj-NnK"/>
+                                </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Instagram" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RlC-9Q-RZW">
-                                <rect key="frame" x="151" y="435" width="112" height="68"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instagram" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RlC-9Q-RZW">
+                                <rect key="frame" x="151" y="414" width="112" height="68"/>
                                 <fontDescription key="fontDescription" name="Zapfino" family="Zapfino" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="RlC-9Q-RZW" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="7JM-jE-f9u"/>
+                            <constraint firstItem="RlC-9Q-RZW" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="aYG-qj-K2t"/>
+                            <constraint firstItem="6Cg-oD-qEQ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="pKh-pL-cPa"/>
+                            <constraint firstItem="RlC-9Q-RZW" firstAttribute="top" secondItem="6Cg-oD-qEQ" secondAttribute="bottom" constant="8" id="udH-8P-hqM"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>

@@ -92,6 +92,10 @@
         }
     }];
 }
+- (IBAction)dismissKeyboard:(id)sender {
+    [self.usernameField endEditing:YES];
+    [self.passwordField endEditing:YES];
+}
 
 /*
 #pragma mark - Navigation
