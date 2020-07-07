@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import <Parse/Parse.h>
+#import "SceneDelegate.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *usernameField;
@@ -80,6 +81,14 @@
         } else {
             NSLog(@"User registered successfully");
             [self performSegueWithIdentifier:@"loginSegue" sender:nil];
+            
+            //UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            //self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:@"tabBar"];
+            
+            /*UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UINavigationController *tabBarController = [storyboard instantiateViewControllerWithIdentifier:@"tabBar"];
+            SceneDelegate *app = (SceneDelegate *) [UIApplication sharedApplication].delegate;
+            [app changeRootViewController:tabBarController :YES];*/
         }
     }];
 }
