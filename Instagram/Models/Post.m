@@ -2,14 +2,14 @@
 //  Post.m
 //  Instagram
 //
-//  Created by Ana Cismaru on 7/6/20.
+//  Created by Ana Cismaru on 7/7/20.
 //  Copyright © 2020 anacismaru. All rights reserved.
 //
 
 #import "Post.h"
 
 @implementation Post
-
+    
 @dynamic postID;
 @dynamic userID;
 @dynamic author;
@@ -17,6 +17,7 @@
 @dynamic image;
 @dynamic likeCount;
 @dynamic commentCount;
+@dynamic postedAt;
 
 + (nonnull NSString *)parseClassName {
     return @"Post";
@@ -30,6 +31,13 @@
     newPost.caption = caption;
     newPost.likeCount = @(0);
     newPost.commentCount = @(0);
+    
+    NSDate *localDate = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+    dateFormatter.dateFormat = @"E MMM d HH:mm:ss Z y";
+    dateFormatter.dateStyle = NSDateFormatterShortStyle;
+    dateFormatter.timeStyle = NSDateFormatterShortStyle;
+    newPost.postedAt = [dateFormatter stringFromDate: localDate];
     
     [newPost saveInBackgroundWithBlock: completion];
 }
@@ -46,6 +54,7 @@
     if (!imageData) {
         return nil;
     }
+    
     
     return [PFFileObject fileObjectWithName:@"image.png" data:imageData];
 }

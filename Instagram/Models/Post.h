@@ -2,12 +2,11 @@
 //  Post.h
 //  Instagram
 //
-//  Created by Ana Cismaru on 7/6/20.
+//  Created by Ana Cismaru on 7/7/20.
 //  Copyright © 2020 anacismaru. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "Parse/Parse.h"
+#import <Parse/Parse.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) PFFileObject *image;
 @property (nonatomic, strong) NSNumber *likeCount;
 @property (nonatomic, strong) NSNumber *commentCount;
+@property (nonatomic, strong) NSString *postedAt;
 
 + (void) postUserImage: ( UIImage * _Nullable )image withCaption: ( NSString * _Nullable )caption withCompletion: (PFBooleanResultBlock  _Nullable)completion;
 

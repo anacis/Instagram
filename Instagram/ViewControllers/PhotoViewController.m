@@ -23,7 +23,6 @@
 }
 
 - (IBAction)cancel:(id)sender {
-    //TODO: Fix this so it reverts back to the feed page
     [self.tabBarController setSelectedIndex:0];
     
 }
@@ -33,14 +32,14 @@
     [Post postUserImage:self.imageView.image withCaption:self.textField.text withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
             NSLog(@"Posted image successfully!");
+            self.textField.text = @"";
+            self.imageView.image = [UIImage imageNamed: @"image_placeholder.png"];
         }
         else {
            NSLog(@"Error: %@", error.localizedDescription);
         }
     }];
     
-    
-    //TODO: Fix this so it reverts back to the feed page
     [self.tabBarController setSelectedIndex:0];
 }
 
@@ -65,7 +64,8 @@
     //UIImage *editedImage = info[UIImagePickerControllerEditedImage];
 
     // Do something with the images (based on your use case)
-    self.imageView.image = originalImage;
+    UIImage *resizedImage = [self resizeImage:originalImage withSize:CGSizeMake(200, 100)];
+    self.imageView.image = resizedImage;
     
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];

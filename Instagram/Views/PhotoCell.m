@@ -10,6 +10,7 @@
 
 @implementation PhotoCell
 
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
@@ -19,6 +20,12 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setUpCell {
+    self.captionLabel.text = self.post[@"caption"];
+    self.postImageView.file = self.post[@"image"];
+    [self.postImageView loadInBackground];
 }
 
 @end

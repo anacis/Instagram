@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 @import Parse;
+#import "Post.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PhotoCell : UITableViewCell
-
-@property (weak, nonatomic) IBOutlet PFImageView *imageView;
+@property (strong, nonatomic) Post *post;
+@property (weak, nonatomic) IBOutlet PFImageView *postImageView;
 @property (weak, nonatomic) IBOutlet UILabel *captionLabel;
+
+- (void)setUpCell;
 
 @end
 
