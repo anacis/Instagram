@@ -7,6 +7,7 @@
 //
 
 #import "PhotoCell.h"
+#import "DateTools.h"
 
 @implementation PhotoCell
 
@@ -33,12 +34,21 @@
     if (user != nil) {
         // User found! update username label with username
         self.usernameLabel.text = user.username;
+        self.profilePic.layer.cornerRadius = self.profilePic.frame.size.height / 2;
         self.profilePic.file = user[@"profilePic"];
         [self.profilePic loadInBackground];
     } else {
         // No user found, set default username
         self.usernameLabel.text = @"🤖";
     }
+    
+    // Convert Date to String
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    // Configure the input format to parse the date string
+    formatter.dateFormat = @"M/dd/yy, h:mm a";
+    NSString *string = self.post.postedAt;
+    NSDate *date = [formatter dateFromString:self.post.postedAt];
+    self.timeAgoLabel.text = [date shortTimeAgoSinceNow];
 }
 
 @end
