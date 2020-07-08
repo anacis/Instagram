@@ -86,9 +86,10 @@
     UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
     //UIImage *editedImage = info[UIImagePickerControllerEditedImage];
 
-    // Do something with the images (based on your use case)
+    // Image editing
     UIImage *resizedImage = [self resizeImage:originalImage withSize:CGSizeMake(300, 300)];
     self.profilePic.image = resizedImage;
+    
     PFUser *me = [PFUser currentUser];
     me[@"profilePic"] = [User getPFFileFromImage:resizedImage];
     [me saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {

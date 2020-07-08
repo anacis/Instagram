@@ -65,6 +65,7 @@
 - (void)getPosts {
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
+    [query includeKey:@"author"];
     query.limit = 20;
 
     // fetch data asynchronously

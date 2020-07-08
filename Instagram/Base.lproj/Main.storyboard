@@ -152,7 +152,7 @@
                                                     <color key="tintColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <state key="normal" image="heart" catalog="system"/>
                                                 </button>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="x8f-BJ-vWR">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="x8f-BJ-vWR" customClass="PFImageView">
                                                     <rect key="frame" x="20" y="11" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="e6F-hb-0Xi"/>
@@ -188,6 +188,8 @@
                                         <connections>
                                             <outlet property="captionLabel" destination="MPD-33-fHH" id="hry-z6-wrI"/>
                                             <outlet property="postImageView" destination="czk-d6-y17" id="Sti-zm-YhQ"/>
+                                            <outlet property="profilePic" destination="x8f-BJ-vWR" id="cNd-3B-4w8"/>
+                                            <outlet property="usernameLabel" destination="9b7-Nb-7cu" id="s5S-X3-TtE"/>
                                             <segue destination="sC8-Wv-2hL" kind="show" id="oKF-Aw-cWm"/>
                                         </connections>
                                     </tableViewCell>
