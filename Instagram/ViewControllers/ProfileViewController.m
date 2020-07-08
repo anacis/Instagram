@@ -9,6 +9,7 @@
 #import "ProfileViewController.h"
 #import "CollectionViewCell.h"
 @import Parse;
+#import "User.h"
 
 @interface ProfileViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -35,10 +36,9 @@
     CGFloat itemHeight = itemWidth;
     layout.itemSize = CGSizeMake(itemWidth, itemHeight);
     
-    self.usernameLabel.text = [PFUser currentUser].username;
-    //TODO: implement logic to check if user already has a profile pic
+    [self setProfileData];
+    
     [self getMyPosts];
-    // Do any additional setup after loading the view.
 }
 
 /*
@@ -89,6 +89,16 @@
     // Do something with the images (based on your use case)
     UIImage *resizedImage = [self resizeImage:originalImage withSize:CGSizeMake(300, 300)];
     self.profilePic.image = resizedImage;
+    PFUser *me = [PFUser currentUser];
+    me[@"profilePic"] = [User getPFFileFromImage:resizedImage];
+    [me saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (succeeded) {
+            NSLog(@"Profile pic saved!");
+        }
+        else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
     
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -121,6 +131,18 @@
         imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     }
     [self presentViewController:imagePickerVC animated:YES completion:nil];
+}
+
+- (void)setProfileData {
+    self.usernameLabel.text = [PFUser currentUser].username;
+    PFFileObject *image = [PFUser currentUser][@"profilePic"];
+    if (image != nil) {
+        self.profilePic.file = image;
+        [self.profilePic loadInBackground];
+    }
+    else {
+        NSLog(@"User does not have a profile pic");
+    }
 }
 
 
