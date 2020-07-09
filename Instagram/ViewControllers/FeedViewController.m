@@ -106,7 +106,6 @@ int skip = loadFactor;
 }
 
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {
-    NSLog(@"%@", self.posts);
     [self getPosts];
     skip = loadFactor;
     [refreshControl endRefreshing];
@@ -114,7 +113,7 @@ int skip = loadFactor;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"detailsSegue"]) {
-        UITableViewCell *tappedCell = sender;
+        PhotoCell *tappedCell = sender;
         NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
         Post *post = self.posts[indexPath.row];
         DetailsViewController *detailsViewController = [segue destinationViewController];

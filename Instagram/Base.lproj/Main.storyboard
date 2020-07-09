@@ -433,6 +433,7 @@
                                         <size key="customSize" width="163" height="154"/>
                                         <connections>
                                             <outlet property="postImageView" destination="g9S-99-tby" id="Z0F-AU-7W7"/>
+                                            <segue destination="sC8-Wv-2hL" kind="show" identifier="profileToDetailsSegue" id="MUy-aT-Bdh"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -568,6 +569,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="ljF-vk-szx"/>
+        <segue reference="MUy-aT-Bdh"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="color-insta" width="60" height="60"/>
