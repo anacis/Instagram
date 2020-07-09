@@ -13,21 +13,39 @@
 #import "PhotoCell.h"
 #import "DetailsViewController.h"
 #import "ProfileViewController.h"
+#import "InfiniteScrollingView.h"
 
 
-@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, PhotoCellDelegate>
+@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, PhotoCellDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSArray *posts;
+@property (strong, nonatomic) NSMutableArray *posts;
+@property (assign, nonatomic) BOOL isMoreDataLoading;
 
 @end
 
 @implementation FeedViewController
+
+bool isMoreDataLoading = false;
+InfiniteScrollingView* loadingMoreView;
+int skip = 1;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    
+    // Set up Infinite Scroll loading indicator
+    CGRect frame = CGRectMake(0, self.tableView.contentSize.height, self.tableView.bounds.size.width, InfiniteScrollingView.defaultHeight);
+    loadingMoreView = [[InfiniteScrollingView alloc] initWithFrame:frame];
+    loadingMoreView.hidden = true;
+    [self.tableView addSubview:loadingMoreView];
+    UIEdgeInsets insets = self.tableView.contentInset;
+    insets.bottom += InfiniteScrollingView.defaultHeight;
+    self.tableView.contentInset = insets;
+    
+    
     [self getPosts];
     //[NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(getPosts) userInfo:nil repeats:true];
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -68,12 +86,12 @@
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
     [query includeKey:@"author"];
-    query.limit = 20;
+    query.limit = 1;
 
     // fetch data asynchronously
     [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
         if (posts != nil) {
-            self.posts = posts;
+            self.posts = (NSMutableArray *)posts;
             [self.tableView reloadData];
         } else {
             NSLog(@"%@", error.localizedDescription);
@@ -102,9 +120,57 @@
     
 }
 
-
 - (void)photoCell:(nonnull PhotoCell *)photoCell didTap:(nonnull PFUser *)user {
     [self performSegueWithIdentifier:@"profileSegue" sender:user];
 }
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+     if(!self.isMoreDataLoading){
+         // Calculate the position of one screen length before the bottom of the results
+        int scrollViewContentHeight = self.tableView.contentSize.height;
+        int scrollOffsetThreshold = scrollViewContentHeight - self.tableView.bounds.size.height;
+
+        // When the user has scrolled past the threshold, start requesting
+        if(scrollView.contentOffset.y > scrollOffsetThreshold && self.tableView.isDragging) {
+            self.isMoreDataLoading = true;
+            // Update position of loadingMoreView, and start loading indicator
+            CGRect frame = CGRectMake(0, self.tableView.contentSize.height, self.tableView.bounds.size.width, InfiniteScrollingView.defaultHeight);
+            loadingMoreView.frame = frame;
+            [loadingMoreView startAnimating];
+            
+            [self loadMoreData];
+        }
+     }
+}
+
+-(void)loadMoreData{
+    PFQuery *query = [PFQuery queryWithClassName:@"Post"];
+    [query orderByDescending:@"createdAt"];
+    [query includeKey:@"author"];
+    query.limit = 1;
+    query.skip = skip;
+    skip += 1;
+
+    // fetch data asynchronously
+    [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
+        if (posts != nil && posts.count != 0) {
+            for(int i = 0; i < posts.count; i++) {
+                [self.posts addObject:posts[i]];
+            }
+            [self.tableView reloadData];
+            self.isMoreDataLoading = false;
+            [loadingMoreView stopAnimating];
+        }
+        else if (posts.count == 0) {
+            NSLog(@"No more posts to load");
+            self.isMoreDataLoading = false;
+            [loadingMoreView stopAnimating];
+        }
+        else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+    }];
+}
+
 
 @end
