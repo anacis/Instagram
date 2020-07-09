@@ -154,16 +154,24 @@
                                                 </button>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="x8f-BJ-vWR" customClass="PFImageView">
                                                     <rect key="frame" x="20" y="11" width="40" height="40"/>
+                                                    <gestureRecognizers/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="e6F-hb-0Xi"/>
                                                         <constraint firstAttribute="height" constant="40" id="zvL-ok-jBW"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="vYA-1u-vrl" appends="YES" id="rxs-KM-hmd"/>
+                                                    </connections>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9b7-Nb-7cu">
                                                     <rect key="frame" x="68" y="22.5" width="78.5" height="17"/>
+                                                    <gestureRecognizers/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="WQq-hB-vqY" appends="YES" id="Tgu-FG-TOb"/>
+                                                    </connections>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4m" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k6Q-eV-dZI">
                                                     <rect key="frame" x="383" y="367" width="21" height="17"/>
@@ -200,7 +208,7 @@
                                             <outlet property="profilePic" destination="x8f-BJ-vWR" id="cNd-3B-4w8"/>
                                             <outlet property="timeAgoLabel" destination="k6Q-eV-dZI" id="AYN-ta-4wZ"/>
                                             <outlet property="usernameLabel" destination="9b7-Nb-7cu" id="s5S-X3-TtE"/>
-                                            <segue destination="sC8-Wv-2hL" kind="show" id="oKF-Aw-cWm"/>
+                                            <segue destination="sC8-Wv-2hL" kind="show" identifier="detailsSegue" id="oKF-Aw-cWm"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -229,11 +237,22 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="Pui-Ok-Sbq" id="YRu-Mr-lXa"/>
+                        <segue destination="nK5-eh-Hvn" kind="show" identifier="profileSegue" id="ljF-vk-szx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Khy-S5-BhC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="WQq-hB-vqY">
+                    <connections>
+                        <action selector="onTapUsername:" destination="U2Y-7O-qtj" id="LLU-VE-cQO"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="vYA-1u-vrl">
+                    <connections>
+                        <action selector="onTapProfilePic:" destination="U2Y-7O-qtj" id="vuW-Ey-4lC"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3830.434782608696" y="139.95535714285714"/>
+            <point key="canvasLocation" x="3841" y="141"/>
         </scene>
         <!--Details View Controller-->
         <scene sceneID="7TD-lW-2Ub">
@@ -563,6 +582,9 @@
             <point key="canvasLocation" x="2009" y="1602"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ljF-vk-szx"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="color-insta" width="60" height="60"/>
         <image name="feed_tab" width="25" height="25"/>

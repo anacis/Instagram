@@ -14,9 +14,11 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
-    //self.profilePic.layer.masksToBounds = true;
-    //self.profilePic.layer.cornerRadius = self.profilePic.frame.height/2;
+     UITapGestureRecognizer *profileTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
+    [self.profilePic addGestureRecognizer:profileTapGestureRecognizer];
+    [self.usernameLabel addGestureRecognizer:profileTapGestureRecognizer];
+    [self.usernameLabel setUserInteractionEnabled:YES];
+    [self.profilePic setUserInteractionEnabled:YES];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -46,9 +48,12 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     // Configure the input format to parse the date string
     formatter.dateFormat = @"M/dd/yy, h:mm a";
-    NSString *string = self.post.postedAt;
     NSDate *date = [formatter dateFromString:self.post.postedAt];
     self.timeAgoLabel.text = [date shortTimeAgoSinceNow];
+}
+
+- (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
+    [self.delegate photoCell:self didTap:self.post.author];
 }
 
 @end

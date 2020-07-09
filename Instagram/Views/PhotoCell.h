@@ -11,6 +11,8 @@
 #import "Post.h"
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol PhotoCellDelegate;
+
 @interface PhotoCell : UITableViewCell
 @property (strong, nonatomic) Post *post;
 @property (weak, nonatomic) IBOutlet PFImageView *postImageView;
@@ -18,10 +20,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet PFImageView *profilePic;
 @property (weak, nonatomic) IBOutlet UILabel *timeAgoLabel;
+@property (nonatomic, weak) id<PhotoCellDelegate> delegate;
 
 
 - (void)setUpCell;
 
 @end
+
+@protocol PhotoCellDelegate
+- (void)photoCell:(PhotoCell *) photoCell didTap: (PFUser *)user;
+@end
+
+
+
 
 NS_ASSUME_NONNULL_END

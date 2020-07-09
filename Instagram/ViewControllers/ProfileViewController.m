@@ -38,9 +38,13 @@
     
     self.profilePic.layer.cornerRadius = self.profilePic.frame.size.height / 2;
     
+    if (self.user == nil) {
+        self.user = [PFUser currentUser];
+    }
+    
     [self setProfileData];
     
-    [self getMyPosts];
+    [self getPosts];
 }
 
 /*
@@ -64,11 +68,11 @@
     return self.myPosts.count;
 }
 
-- (void)getMyPosts {
-    PFUser *me = [PFUser currentUser];
+- (void)getPosts {
+    //PFUser *me = [PFUser currentUser];
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
-    [query whereKey:@"author" equalTo:me];
+    [query whereKey:@"author" equalTo:self.user];
     //query.limit = 20;
 
     // fetch data asynchronously
@@ -122,23 +126,28 @@
 }
 
 - (IBAction)onTapImage:(id)sender {
-    NSLog(@"Tapping on image!");
-    UIImagePickerController *imagePickerVC = [UIImagePickerController new];
-    imagePickerVC.delegate = self;
-    imagePickerVC.allowsEditing = YES;
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+    if (self.user == [PFUser currentUser]) {
+        NSLog(@"Tapping on image!");
+        UIImagePickerController *imagePickerVC = [UIImagePickerController new];
+        imagePickerVC.delegate = self;
+        imagePickerVC.allowsEditing = YES;
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+        }
+        else {
+            NSLog(@"Camera 🚫 available so we will use photo library instead");
+            imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        }
+        [self presentViewController:imagePickerVC animated:YES completion:nil];
     }
     else {
-        NSLog(@"Camera 🚫 available so we will use photo library instead");
-        imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        NSLog(@"Can't change someone else's profile picture");
     }
-    [self presentViewController:imagePickerVC animated:YES completion:nil];
 }
 
 - (void)setProfileData {
-    self.usernameLabel.text = [PFUser currentUser].username;
-    PFFileObject *image = [PFUser currentUser][@"profilePic"];
+    self.usernameLabel.text = self.user.username;
+    PFFileObject *image = self.user[@"profilePic"];
     if (image != nil) {
         self.profilePic.file = image;
         [self.profilePic loadInBackground];

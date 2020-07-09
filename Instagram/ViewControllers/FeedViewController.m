@@ -12,9 +12,10 @@
 #import <Parse/Parse.h>
 #import "PhotoCell.h"
 #import "DetailsViewController.h"
+#import "ProfileViewController.h"
 
 
-@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, PhotoCellDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *posts;
 
@@ -54,6 +55,7 @@
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     PhotoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PhotoCell"];
     cell.post = self.posts[indexPath.row];
+    cell.delegate = self;
     [cell setUpCell];
     return cell;
 }
@@ -85,13 +87,24 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UITableViewCell *tappedCell = sender;
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
-    Post *post = self.posts[indexPath.row];
-    DetailsViewController *detailsViewController = [segue destinationViewController];
-    detailsViewController.post = post;
+    if ([[segue identifier] isEqualToString:@"detailsSegue"]) {
+        UITableViewCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+        Post *post = self.posts[indexPath.row];
+        DetailsViewController *detailsViewController = [segue destinationViewController];
+        detailsViewController.post = post;
+    }
+    else if ([[segue identifier] isEqualToString:@"profileSegue"]) {
+        NSLog(@"Going to Profile Page");
+         ProfileViewController *profileController = [segue destinationViewController];
+        profileController.user = sender;
+    }
     
 }
 
+
+- (void)photoCell:(nonnull PhotoCell *)photoCell didTap:(nonnull PFUser *)user {
+    [self performSegueWithIdentifier:@"profileSegue" sender:user];
+}
 
 @end

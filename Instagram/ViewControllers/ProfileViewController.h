@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@import Parse;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ProfileViewController : UIViewController
+
+@property (nonatomic, strong) PFUser *user;
 
 @end
 
