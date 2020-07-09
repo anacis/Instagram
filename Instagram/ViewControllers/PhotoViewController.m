@@ -8,6 +8,7 @@
 
 #import "PhotoViewController.h"
 #import "Post.h"
+#import "MBProgressHUD.h"
 
 @interface PhotoViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -32,7 +33,10 @@
 }
 
 - (IBAction)share:(id)sender {
+    // Display HUD right before the request is made
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [Post postUserImage:self.imageView.image withCaption:self.textField.text withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         if (succeeded) {
             NSLog(@"Posted image successfully!");
             [self.textField endEditing:YES];
@@ -43,9 +47,10 @@
         else {
            NSLog(@"Error: %@", error.localizedDescription);
         }
+        [self.tabBarController setSelectedIndex:0];
     }];
     
-    [self.tabBarController setSelectedIndex:0];
+    
 }
 
 - (IBAction)onTapImage:(id)sender {

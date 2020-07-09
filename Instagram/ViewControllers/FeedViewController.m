@@ -55,6 +55,10 @@ int skip = loadFactor;
     [self.tableView insertSubview:refreshControl atIndex:0];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self getPosts];
+}
+
 - (IBAction)logout:(id)sender {
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
         if (error == nil) {
