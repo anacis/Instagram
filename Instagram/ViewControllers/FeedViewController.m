@@ -25,9 +25,11 @@
 
 @implementation FeedViewController
 
+//Global variables
 bool isMoreDataLoading = false;
 InfiniteScrollingView* loadingMoreView;
-int skip = 1;
+const int loadFactor = 5;
+int skip = loadFactor;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -86,7 +88,7 @@ int skip = 1;
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
     [query includeKey:@"author"];
-    query.limit = 1;
+    query.limit = loadFactor;
 
     // fetch data asynchronously
     [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
@@ -100,7 +102,9 @@ int skip = 1;
 }
 
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {
+    NSLog(@"%@", self.posts);
     [self getPosts];
+    skip = loadFactor;
     [refreshControl endRefreshing];
 }
 
@@ -147,9 +151,9 @@ int skip = 1;
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
     [query includeKey:@"author"];
-    query.limit = 1;
+    query.limit = loadFactor;
     query.skip = skip;
-    skip += 1;
+    skip += loadFactor;
 
     // fetch data asynchronously
     [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
