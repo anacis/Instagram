@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
 @property (weak, nonatomic) IBOutlet UILabel *captionLabel;
 @property (weak, nonatomic) IBOutlet PFImageView *postImageView;
+@property (weak, nonatomic) IBOutlet UIButton *likeButton;
 
 @end
 
@@ -27,9 +28,51 @@
     self.captionLabel.text = self.post[@"caption"];
     self.postImageView.file = self.post[@"image"];
     [self.postImageView loadInBackground];
+    if ([self.post.likedBy containsObject: [PFUser currentUser].objectId]) {
+        UIImage *img = [UIImage systemImageNamed:@"heart.fill"];
+        [self.likeButton setImage:img forState:UIControlStateNormal];
+         NSLog(@"Object is liked: %@", self.post.likedBy);
+    }
+    else {
+        UIImage *img = [UIImage systemImageNamed:@"heart"];
+        [self.likeButton setImage:img forState:UIControlStateNormal];
+         NSLog(@"object is unliked: %@", self.post.likedBy);
+    }
     
     //TODO: format Date nicely
     self.timestampLabel.text = self.post[@"postedAt"] ;
+}
+
+- (IBAction)didTapLike:(id)sender {
+    if (![self.post.likedBy containsObject: [PFUser currentUser].objectId]) {
+        UIImage *img = [UIImage systemImageNamed:@"heart.fill"];
+        [self.likeButton setImage:img forState:UIControlStateNormal];
+        int value = [self.post.likeCount intValue];
+        self.post.likeCount = [NSNumber numberWithInt:value + 1];
+        [self.post.likedBy addObject:[PFUser currentUser].objectId];
+        NSLog(@"Liked object: %@", self.post.likedBy);
+       }
+    else {
+        UIImage *img = [UIImage systemImageNamed:@"heart"];
+        [self.likeButton setImage:img forState:UIControlStateNormal];
+        int value = [self.post.likeCount intValue];
+        if (value > 0) {
+           self.post.likeCount = [NSNumber numberWithInt:value - 1];
+        }
+        [self.post.likedBy removeObject:[PFUser currentUser].objectId];
+        NSLog(@"Unliked object: %@", self.post.likedBy);
+    }
+   
+    PFQuery *query = [PFQuery queryWithClassName:@"Post"];
+
+    // Retrieve the object by id
+    [query getObjectInBackgroundWithId:self.post.objectId
+                                 block:^(PFObject *post, NSError *error) {
+        NSLog(@"Updated database");
+        post[@"likeCount"] = self.post.likeCount;
+        post[@"likedBy"] = self.post.likedBy;
+        [post saveInBackground];
+    }];
 }
 
 /*

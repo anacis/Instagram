@@ -28,6 +28,7 @@
 }
 
 - (void)setUpCell {
+    NSLog(@"Setting up cell");
     self.captionLabel.text = self.post[@"caption"];
     self.postImageView.file = self.post[@"image"];
     [self.postImageView loadInBackground];
@@ -44,6 +45,17 @@
         self.usernameLabel.text = @"🤖";
     }
     
+    if ([self.post.likedBy containsObject: [PFUser currentUser].objectId]) {
+        UIImage *img = [UIImage systemImageNamed:@"heart.fill"];
+        [self.likeButton setImage:img forState:UIControlStateNormal];
+         NSLog(@"Object is liked: %@", self.post.likedBy);
+    }
+    else {
+        UIImage *img = [UIImage systemImageNamed:@"heart"];
+        [self.likeButton setImage:img forState:UIControlStateNormal];
+         NSLog(@"object is unliked: %@", self.post.likedBy);
+    }
+    
     // Convert Date to String
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     // Configure the input format to parse the date string
@@ -54,6 +66,36 @@
 
 - (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
     [self.delegate photoCell:self didTap:self.post.author];
+}
+
+- (IBAction)didTapLike:(id)sender {
+    if (![self.post.likedBy containsObject: [PFUser currentUser].objectId]) {
+        UIImage *img = [UIImage systemImageNamed:@"heart.fill"];
+        [self.likeButton setImage:img forState:UIControlStateNormal];
+        int value = [self.post.likeCount intValue];
+        self.post.likeCount = [NSNumber numberWithInt:value + 1];
+        [self.post.likedBy addObject:[PFUser currentUser].objectId];
+         NSLog(@"Liked object: %@", self.post.likedBy);
+    }
+    else {
+        UIImage *img = [UIImage systemImageNamed:@"heart"];
+        [self.likeButton setImage:img forState:UIControlStateNormal];
+        int value = [self.post.likeCount intValue];
+        if (value > 0) {
+            self.post.likeCount = [NSNumber numberWithInt:value - 1];
+        }
+        [self.post.likedBy removeObject:[PFUser currentUser].objectId];
+         NSLog(@"Unliked object: %@", self.post.likedBy);
+    }
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Post"];
+    [query getObjectInBackgroundWithId:self.post.objectId
+                                 block:^(PFObject *post, NSError *error) {
+        NSLog(@"Updated database");
+        post[@"likeCount"] = self.post.likeCount;
+        post[@"likedBy"] = self.post.likedBy;
+        [post saveInBackground];
+    }];
 }
 
 @end

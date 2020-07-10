@@ -18,6 +18,8 @@
 @dynamic likeCount;
 @dynamic commentCount;
 @dynamic postedAt;
+@dynamic liked;
+@dynamic likedBy;
 
 + (nonnull NSString *)parseClassName {
     return @"Post";
@@ -31,6 +33,7 @@
     newPost.caption = caption;
     newPost.likeCount = @(0);
     newPost.commentCount = @(0);
+    newPost.likedBy = [[NSMutableArray alloc] init];
     
     NSDate *localDate = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];

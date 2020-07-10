@@ -151,6 +151,9 @@
                                                     <rect key="frame" x="20" y="367" width="21" height="22"/>
                                                     <color key="tintColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <state key="normal" image="heart" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="didTapLike:" destination="xaC-zK-n8E" eventType="touchUpInside" id="tm5-0r-9kL"/>
+                                                    </connections>
                                                 </button>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="x8f-BJ-vWR" customClass="PFImageView">
                                                     <rect key="frame" x="20" y="11" width="40" height="40"/>
@@ -198,6 +201,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="captionLabel" destination="MPD-33-fHH" id="hry-z6-wrI"/>
+                                            <outlet property="likeButton" destination="WPX-Wf-s30" id="D2l-MW-h3Q"/>
                                             <outlet property="postImageView" destination="czk-d6-y17" id="Sti-zm-YhQ"/>
                                             <outlet property="profilePic" destination="x8f-BJ-vWR" id="cNd-3B-4w8"/>
                                             <outlet property="timeAgoLabel" destination="k6Q-eV-dZI" id="AYN-ta-4wZ"/>
@@ -265,6 +269,21 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kks-Ac-zJ7">
+                                <rect key="frame" x="103" y="433" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" systemColor="systemGray2Color" red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="message" catalog="system"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oda-6p-Fki">
+                                <rect key="frame" x="57" y="433" width="21" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="heart" catalog="system"/>
+                                <connections>
+                                    <action selector="didTapLike:" destination="sC8-Wv-2hL" eventType="touchUpInside" id="d7t-6Q-Zqp"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -282,6 +301,7 @@
                     <navigationItem key="navigationItem" id="BTK-jl-knV"/>
                     <connections>
                         <outlet property="captionLabel" destination="66P-KS-NSy" id="pAu-4p-vq1"/>
+                        <outlet property="likeButton" destination="Oda-6p-Fki" id="UKK-ke-bsi"/>
                         <outlet property="postImageView" destination="Mgc-pb-eXR" id="TqK-7R-Sei"/>
                         <outlet property="timestampLabel" destination="sRg-LA-LgV" id="kdK-0H-M9S"/>
                     </connections>
@@ -569,7 +589,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="ljF-vk-szx"/>
-        <segue reference="MUy-aT-Bdh"/>
+        <segue reference="oKF-Aw-cWm"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="color-insta" width="60" height="60"/>
