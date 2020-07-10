@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *captionLabel;
 @property (weak, nonatomic) IBOutlet PFImageView *postImageView;
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
+@property (weak, nonatomic) IBOutlet UILabel *likeCountLabel;
 
 @end
 
@@ -28,6 +29,9 @@
     self.captionLabel.text = self.post[@"caption"];
     self.postImageView.file = self.post[@"image"];
     [self.postImageView loadInBackground];
+    
+    self.likeCountLabel.text = [self.post.likeCount stringValue];
+    
     if ([self.post.likedBy containsObject: [PFUser currentUser].objectId]) {
         UIImage *img = [UIImage systemImageNamed:@"heart.fill"];
         [self.likeButton setImage:img forState:UIControlStateNormal];
@@ -62,6 +66,8 @@
         [self.post.likedBy removeObject:[PFUser currentUser].objectId];
         NSLog(@"Unliked object: %@", self.post.likedBy);
     }
+    
+    self.likeCountLabel.text = [self.post.likeCount stringValue];
    
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
 

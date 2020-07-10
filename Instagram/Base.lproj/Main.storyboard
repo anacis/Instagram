@@ -143,7 +143,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZaI-wV-G4b">
-                                                    <rect key="frame" x="61" y="367" width="22" height="22"/>
+                                                    <rect key="frame" x="71" y="367" width="22" height="22"/>
                                                     <color key="tintColor" systemColor="systemGray2Color" red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <state key="normal" image="message" catalog="system"/>
                                                 </button>
@@ -176,6 +176,13 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3f-EJ-5NJ">
+                                                    <rect key="frame" x="41" y="369" width="10" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="MPD-33-fHH" firstAttribute="leading" secondItem="TEq-n3-YXF" secondAttribute="leading" constant="20" id="153-KP-fNB"/>
@@ -195,13 +202,14 @@
                                                 <constraint firstItem="9b7-Nb-7cu" firstAttribute="centerY" secondItem="x8f-BJ-vWR" secondAttribute="centerY" id="jlx-6e-UG9"/>
                                                 <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="9b7-Nb-7cu" secondAttribute="trailing" constant="20" id="l5f-Te-R5V"/>
                                                 <constraint firstAttribute="trailing" secondItem="czk-d6-y17" secondAttribute="trailing" id="mSr-Br-gEj"/>
-                                                <constraint firstItem="ZaI-wV-G4b" firstAttribute="leading" secondItem="WPX-Wf-s30" secondAttribute="trailing" constant="20" id="pPG-KV-MA5"/>
+                                                <constraint firstItem="ZaI-wV-G4b" firstAttribute="leading" secondItem="WPX-Wf-s30" secondAttribute="trailing" constant="30" id="pPG-KV-MA5"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MPD-33-fHH" secondAttribute="trailing" constant="20" id="tYX-7Y-CD9"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="captionLabel" destination="MPD-33-fHH" id="hry-z6-wrI"/>
                                             <outlet property="likeButton" destination="WPX-Wf-s30" id="D2l-MW-h3Q"/>
+                                            <outlet property="likeCountLabel" destination="H3f-EJ-5NJ" id="Ohe-6V-kLp"/>
                                             <outlet property="postImageView" destination="czk-d6-y17" id="Sti-zm-YhQ"/>
                                             <outlet property="profilePic" destination="x8f-BJ-vWR" id="cNd-3B-4w8"/>
                                             <outlet property="timeAgoLabel" destination="k6Q-eV-dZI" id="AYN-ta-4wZ"/>
@@ -269,12 +277,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kks-Ac-zJ7">
-                                <rect key="frame" x="103" y="433" width="22" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" systemColor="systemGray2Color" red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" image="message" catalog="system"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oda-6p-Fki">
                                 <rect key="frame" x="57" y="433" width="21" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -284,6 +286,19 @@
                                     <action selector="didTapLike:" destination="sC8-Wv-2hL" eventType="touchUpInside" id="d7t-6Q-Zqp"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kks-Ac-zJ7">
+                                <rect key="frame" x="136" y="433" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" systemColor="systemGray2Color" red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="message" catalog="system"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ebQ-vx-lCp">
+                                <rect key="frame" x="80" y="435" width="10" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -302,6 +317,7 @@
                     <connections>
                         <outlet property="captionLabel" destination="66P-KS-NSy" id="pAu-4p-vq1"/>
                         <outlet property="likeButton" destination="Oda-6p-Fki" id="UKK-ke-bsi"/>
+                        <outlet property="likeCountLabel" destination="ebQ-vx-lCp" id="blP-9Z-bY9"/>
                         <outlet property="postImageView" destination="Mgc-pb-eXR" id="TqK-7R-Sei"/>
                         <outlet property="timestampLabel" destination="sRg-LA-LgV" id="kdK-0H-M9S"/>
                     </connections>

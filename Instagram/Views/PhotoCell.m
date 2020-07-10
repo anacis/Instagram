@@ -45,6 +45,8 @@
         self.usernameLabel.text = @"🤖";
     }
     
+    self.likeCountLabel.text = [self.post.likeCount stringValue];
+    
     if ([self.post.likedBy containsObject: [PFUser currentUser].objectId]) {
         UIImage *img = [UIImage systemImageNamed:@"heart.fill"];
         [self.likeButton setImage:img forState:UIControlStateNormal];
@@ -87,6 +89,8 @@
         [self.post.likedBy removeObject:[PFUser currentUser].objectId];
          NSLog(@"Unliked object: %@", self.post.likedBy);
     }
+    
+    self.likeCountLabel.text = [self.post.likeCount stringValue];
     
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query getObjectInBackgroundWithId:self.post.objectId
