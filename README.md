@@ -2,7 +2,7 @@
 
 **Instagram* is a photo sharing app using Parse as its backend.
 
-Time spent: **X** hours spent in total
+Time spent: **22** hours spent in total
 
 ## User Stories
 
@@ -40,14 +40,20 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. Would love to talk about implementing infinite scrolling it was very fun to do.
+2. I would also love to learn about how to improve my UI even more :)
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://g.recordit.co/xzonXreLDK.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+<img src='http://g.recordit.co/z7bX0HOnJi.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+<img src='http://g.recordit.co/o1xmBfnMAL.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+<img src='http://g.recordit.co/m62xvOpMux.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -56,6 +62,10 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 List an 3rd party libraries, icons, graphics, or other assets you used in your app.
 
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
+- Parse
+- Parse/UI
+- DateTools
+- MBProgressHUD
 
 
 ## Notes
