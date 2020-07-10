@@ -48,6 +48,18 @@
     [self getPosts];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    self.profilePic.layer.cornerRadius = self.profilePic.frame.size.height / 2;
+    
+    if (self.user == nil) {
+        self.user = [PFUser currentUser];
+    }
+    
+    [self setProfileData];
+    
+    [self getPosts];
+}
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"profileToDetailsSegue"]) {
